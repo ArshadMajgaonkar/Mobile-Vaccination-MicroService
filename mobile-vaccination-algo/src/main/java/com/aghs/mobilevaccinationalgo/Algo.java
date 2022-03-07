@@ -1,30 +1,34 @@
+package com.aghs.mobilevaccinationalgo;
+
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 import java.util.Map.Entry;
 
-class Algo{
+public class Algo{
     
-    public static void main(String args[])
+    public static List<List<Long>> algorithm(int bagLimit, HashMap<Long, Long> spotMappedSlot)
     {
-        HashMap<Integer,Integer> m = new HashMap<Integer,Integer>();
+       /* HashMap<Integer,Integer> spotMappedSlot = new HashMap<Integer,Integer>();
         
         
-        m.put(10200,200);
-        m.put(10120,120);
-        m.put(100120,120);
-        m.put(10110,110);
-        m.put(10080,80);
-        m.put(1080,80);
-        m.put(1060,60);
-        m.put(10060,60);
-        m.put(1056,56);
-        m.put(1030,30);
+        spotMappedSlot.put(10200L,200L);
+        spotMappedSlot.put(10120L,120L);
+        spotMappedSlot.put(100120L,120L);
+        spotMappedSlot.put(10110L,110L);
+        spotMappedSlot.put(10080L,80L);
+        spotMappedSlot.put(1080L,80L);
+        spotMappedSlot.put(1060L,60L);
+        spotMappedSlot.put(10060L,60L);
+        spotMappedSlot.put(1056L,56L);
+        spotMappedSlot.put(1030L,30L);*/
         
-        // System.out.println(m);
+        // System.out.println(spotMappedSlotm);
         // m = {1001=200, 10002=120, 1100=120, 1011=110, 10102=80, 1265=80, 1233=60};
         
-        ArrayList<Integer> al = new ArrayList<Integer>();
+        ArrayList<Long> al = new ArrayList<>();
         
-        for(Integer val : m.values())
+        for(Long val : spotMappedSlot.values())
         {
             al.add(val);
         }
@@ -32,11 +36,13 @@ class Algo{
         Collections.sort(al, Collections.reverseOrder());
         
         //implementing algo
+
+        List<List<Long>> finalResult = new ArrayList<>();
         
          while(al.size() > 0)
          {
-            ArrayList<Integer> res = new ArrayList<Integer>();
-            int curr_bag_limit = 300 ;
+            ArrayList<Long> res = new ArrayList<>();
+            int curr_bag_limit = bagLimit;
         
             int it=0;
             
@@ -45,14 +51,14 @@ class Algo{
                 if(al.get(it) <= curr_bag_limit)
                 {
                     //finding key from map
-                    Integer val = al.get(it);
+                    Long val = al.get(it);
                     
-                    for(Entry<Integer,Integer> entry : m.entrySet())
+                    for(Entry<Long,Long> entry : spotMappedSlot.entrySet())
                     {
                         if(entry.getValue()==val)
                         {
                             res.add(entry.getKey());
-                            m.remove(entry.getKey());
+                            spotMappedSlot.remove(entry.getKey());
                             break;
                         }
                     }
@@ -63,8 +69,9 @@ class Algo{
                 else
                     it++;
             }
-            System.out.println(res);
+            finalResult.add(res);
         }
+         return finalResult;
 
     }
 }
